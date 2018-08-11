@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header">
+</head>
+<body>
+	<div th:replace="common/header :: navbar" />
+	<form th:action="@{/ticket/create}" method="post">
+		<fieldset>
+			<!-- Form Name -->
+			<div class="container">
+				<legend>Create a Ticket Today</legend>
+				
+				<div class="alert alert-danger" th:if="${invalidTicket}" >
+					<span th:utext="${feedBack}"></span>
+				</div>
+				
+				<input hidden="hidden" name="id" th:value="${ticket.id}" />
+				<div class="row">
+					<div class="col-sm-11">
+						<div class="input-group">
+							<span class="input-group-addon"><span th:text="'Ticket # ' + ${ticket.id}"></span></span>
+								<input id="title" type="text" class="form-control col-md-6 input-lg" th:value="${ticket.title}" name="title" autocomplete="off" />
+						</div>
+					</div>
+					<div class="col-sm-1">
+						<button class="btn btn-primary btn-lg delete-employee" type="submit" value="save">
+							<span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Save
+						</button>
+					</div>
+				</div>
+
+
+				<br />
+
+				<div class="row">
+					<div class="col-sm-3">
+						<div class="input-group">
+							<span class="input-group-addon">Scheduled State:</span>
+							<select th:value="${ticket.scheduledState}" id="scheduledState" name="scheduledState"
+								class="form-control">
+								<option value="Backlogged"
+									th:selected="(${ticket.scheduledState}=='Backlogged')">Backlogged</option>
+								<option value="Defined"
+									th:selected="(${ticket.scheduledState}=='Defined')">Defined</option>
+								<option value="In-Progress"
+									th:selected="(${ticket.scheduledState}=='In-Progress')">In-Progress</option>
+								<option value="Completed"
+									th:selected="(${ticket.scheduledState}=='Completed')">Completed</option>
+								<option value="Accepted"
+									th:selected="(${ticket.scheduledState}=='Accepted')">Accepted</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<br />
+				<div class="row">
+					<div class="form-group">
+						<div class="col-sm-10">
+							<label for="description">Description</label>
+							<textarea name="description" rows="5" class="form-control"
+								id="description" th:field="${ticket.description}" placeholder="Description"></textarea>
+							<span class="help-block">Description of the ticket</span>
+						</div>
+						<div class="col-sm-2">
+							<label for="owner">Owner</label>
+							<select th:value="${ticket.owner}" id="owner" name="owner"
+								class="form-control">
+								<option value="" selected="selected" disabled="disabled">Select an option</option>
+								<option value="Backlogged"
+									th:selected="(${ticket.owner}=='Backlogged')">Backlogged</option>
+								<option value="Defined"
+									th:selected="(${ticket.owner}=='Defined')">Defined</option>
+								<option value="In-Progress"
+									th:selected="(${ticket.owner}=='In-Progress')">In-Progress</option>
+								<option value="Completed"
+									th:selected="(${ticket.owner}=='Completed')">Completed</option>
+								<option value="Accepted"
+									th:selected="(${ticket.owner}=='Accepted')">Accepted</option>
+							</select>
+						</div>
+						<div class="col-sm-2">
+							<label for="assigned">Assigned to</label>
+							
+							<select th:value="${ticket.assigned}" id="assigned" name="assigned" class="form-control">
+								<option value="" selected="selected" disabled="disabled">Select Mail id</option>
+								<option th:each="mailId : ${mailIdList}" th:value="${mailId}" th:text="${mailId}" th:selected="(${ticket.assigned}==${mailId})"></option>
+							</select>
+							
+							
+<!-- 							<select th:value="" id="" 
+								class="form-control">
+								<option value="" selected="selected" disabled="disabled">Select an option</option>
+								<option value="Backlogged"
+									th:selected="(${ticket.assigned}=='Backlogged')">Backlogged</option>
+								<option value="Defined"
+									th:selected="(${ticket.assigned}=='Defined')">Defined</option>
+								<option value="In-Progress"
+									th:selected="(${ticket.assigned}=='In-Progress')">In-Progress</option>
+								<option value="Completed"
+									th:selected="(${ticket.assigned}=='Completed')">Completed</option>
+								<option value="Accepted"
+									th:selected="(${ticket.assigned}=='Accepted')">Accepted</option>
+							</select>
+ -->						</div>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+	</form>
+
+	<form class="was-validated" th:action="@{/ticket/uploadfile}" enctype="multipart/form-data" method="post">
+		<div class="container">
+			<div class="form-group">
+				<div class="row">
+					<div class="col-md-2">
+						<label for="uploadDocuments">Add Attachments</label>
+					</div>
+					<div class="col-md-3">
+						<input id="uploadDocuments" type="file" name="uploadDocuments" />
+					</div>
+					<div class="col-md-2">
+						<button type="submit"
+							class="btn btn-outline-success btn-rounded waves-effect">
+							<span class="glyphicon glyphicon-upload"></span> Upload
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<form class="was-validated" action=" " method="post">
+		<div class="container">
+			<div class="form-group">
+				<label for="Comments">Comments</label>
+				<textarea name="Comments" rows="3" class="form-control"
+					id="Comments" placeholder="Comments"></textarea>
+				<span class="help-block">Description of the ticket</span>
+			</div>
+		</div>
+	</form>
+
+
+	<!-- /.container -->
+	<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>

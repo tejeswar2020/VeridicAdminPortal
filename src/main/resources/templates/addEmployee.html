@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+<style>
+	@font-face {
+	    font-family: 'Sketch Block';
+	    src: url('http://tangledindesign.com/codepen/fonts/sketch_block-webfont.eot');
+	    src: url('http://tangledindesign.com/codepen/fonts/sketch_block-webfont.eot?#iefix') format('embedded-opentype'),
+	         url('http://tangledindesign.com/codepen/fonts/sketch_block-webfont.woff') format('woff'),
+	         url('http://tangledindesign.com/codepen/fonts/sketch_block-webfont.ttf') format('truetype'),
+	         url('http://tangledindesign.com/codepen/fonts/sketch_block-webfont.svg#SketchBlockBold') format('svg');
+	}
+	
+	@font-face {
+	    font-family: 'Museo 700';
+	    src: url('http://tangledindesign.com/codepen/fonts/Museo700-Regular-webfont.eot');
+	    src: url('http://tangledindesign.com/codepen/fonts/Museo700-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+	         url('http://tangledindesign.com/codepen/fonts/Museo700-Regular-webfont.woff') format('woff'),
+	         url('http://tangledindesign.com/codepen/fonts/Museo700-Regular-webfont.ttf') format('truetype'),
+	         url('http://tangledindesign.com/codepen/fonts/Museo700-Regular-webfont.svg#SketchBlockBold') format('svg');
+	}
+	
+	@font-face {
+	    font-family: 'CallunaRegular';
+	    src: url('http://tangledindesign.com/codepen/fonts/Calluna-Regular-webfont.eot');
+	    src: url('http://tangledindesign.com/codepen/fonts/Calluna-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+	         url('http://tangledindesign.com/codepen/fonts/Calluna-Regular-webfont.woff') format('woff'),
+	         url('http://tangledindesign.com/codepen/fonts/Calluna-Regular-webfont.ttf') format('truetype'),
+	         url('http://tangledindesign.com/codepen/fonts/Calluna-Regular-webfont.svg#CallunaRegular') format('svg');
+	}
+	
+	body {
+	    background: #333;
+	    color: #fff;
+	}
+
+    blockquote {
+        width: 100%;
+        font: 2.65em CallunaRegular;
+        letter-spacing: .075em;
+        float: left;
+        padding: 45px 0 30px 25px;
+        margin: 0;
+        border-top: 2px dotted #858585;
+        border-bottom: 2px dotted #858585;
+        -webkit-transform: rotate(-3deg);
+        -moz-transform: rotate(-3deg);
+    }
+
+   /*  .container:before {
+        content: "“";
+        font-size: 13em;
+        position: absolute;
+        left: -100px;
+        color: #666;
+    }
+
+    .container:after {
+        content: "”";
+        font-size: 13em;
+        position: absolute;
+        right: -100px;
+        top: 150px;
+        color: #666;
+    } */
+
+      blockquote:first-line {
+          font: 1.85em "Sketch Block";
+          color: #fff79e;
+      }
+
+      /* blockquote:first-letter {
+          font-size: 1.9em;
+          text-transform: Uppercase;
+          float: left;
+          line-height: .52em;
+          margin-right: -28px;
+          position: relative;
+          z-index: 1;
+      } */
+
+      blockquote strong:first-child {
+          margin-left: 8px;
+          letter-spacing: 0;
+      }
+
+      blockquote strong:last-child {
+          font: 2em "Museo 700";
+          text-transform: uppercase;
+          letter-spacing: 0;
+      }
+
+      blockquote em {
+          border-bottom: 2px dotted #858585;
+      }
+
+      blockquote + b {
+          float: right;
+          margin-top: 10px;
+          font: 1.6em CallunaRegular;
+          letter-spacing: .15em;
+      }
+
+      blockquote + b:first-letter {
+          color: #fff79e;
+          font-size: 1.3em;
+          font-style: italic;
+          letter-spacing: .25em;
+      }
+
+      @-moz-document url-prefix() { 
+
+          blockquote:first-letter {
+              margin-top: -29px;
+          }
+
+      }
+</style>
+<body>
+	<div th:replace="common/header :: navbar" />
+	<div class="container">
+		<div class="row">
+			<article class="container">
+				<blockquote>
+					<strong>Adding Employee</strong> to <strong><em>Veridic</em> Family</strong>
+				</blockquote>
+				<!-- <b>By <span th:text=""></span></b> -->
+			</article>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-6 col-md-offset-4">
+
+				<form th:action="@{/employee/add}" method="post">
+					<div class="form-group">
+						<label for="newUsername">* Enter Username: </label>&nbsp;<span
+							style="color: red;" th:if="${usernameExists}"> Username
+							already exists. Choose a different one.</span> <input
+							required="required" type="text" class="form-control"
+							id="newUsername" name="username" th:value="${username}"/>
+						<p style="color: #828282">Enter your username here.</p>
+					</div>
+
+					<div class="form-group">
+						<label for="email">* Enter Email Address: </label><span
+							style="color: red;" th:if="${emailExists}" th:text="${feedback}"></span> <input required="required"
+							type="text" class="form-control" id="email" th:value="${email}" name="email" />
+						<p style="color: #828282">A valid email address. All emails
+							from the system will be sent to this address. The email address
+							is not made public and will only be used if you wish to receive a
+							new password or wish to receive certain notification.</p>
+					</div>
+
+					<button type="submit" class="btn btn-primary">Create Account for New Employee</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>
